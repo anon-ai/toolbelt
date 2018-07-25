@@ -1,8 +1,10 @@
 .DS_Store
 .Python
 .env.sh
+*.spec
 *.pyc
 __pycache__
+build
 dist
 var
 venv

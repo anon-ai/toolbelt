@@ -1,7 +1,0 @@
-{
-  "transform": {
-    "postcode": {
-      "action": "pass"
-    }
-  }
-}

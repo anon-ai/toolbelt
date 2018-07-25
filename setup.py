@@ -11,16 +11,16 @@ with open('VERSION') as f:
     version = f.read().strip()
 
 setup(
-    name='anon-ai-toolbelt',
-    description='A command-line tool for using the Anon AI web service.',
+    name='hazy',
+    description='Hazy command line interface (CLI) toolbelt.',
     long_description=long_description,
-    url='https://github.com/anon-ai/toolbelt',
-    author='Anon AI',
-    author_email='info@anon.ai',
+    url='https://github.com/hazy/toolbelt',
+    author='Hazy',
+    author_email='info@hazy.com',
     version=version,
     license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
@@ -37,7 +37,7 @@ setup(
     zip_safe=False,
     entry_points = {
         'console_scripts': [
-            'anon = anon_ai_toolbelt.command:main',
+            'hazy = hazy.main:cli',
         ],
     },
 )

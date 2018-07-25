@@ -4,10 +4,12 @@
 """
 
 import click
+import requests
 
 from .. import aliased
 from ..util import interpolate
 from ..validators import duration
+from tinynetrc import Netrc
 
 
 @click.group(cls=aliased.Group)
@@ -54,11 +56,18 @@ def login_with_password(email, expires_in, password):
       If successful, store the resulting access token in `~/.netrc`.
     """
 
-    # msg = 'Forbidden. Have you logged in with the right credentials?'
-    # click.secho(msg, fg='red')
-    # raise click.Abort()
-    raise NotImplementedError
-
+    payload = { 'user[email]': email, 'user[password]': password }
+    r = requests.post('http://localhost:4002/api/v2/auth', data=payload)
+    if r.status_code == 200:
+        data = r.json()['data']
+        netrc = Netrc()
+        netrc['localhost'] = {
+            'login': data['email'],
+            'password': data['token']
+        }
+        netrc.save()
+    else:
+        print("Authentication error")
 
 def login_with_token(email, expires_in, token):
     """Authenticate against the web service with the email and access token.
@@ -77,24 +86,25 @@ def login_with_token(email, expires_in, token):
 def logout(obj):
     """Logout and clear local toolbelt credentials."""
 
-    raise NotImplementedError
-
+    netrc = Netrc()
+    netrc.pop('localhost', None)
+    netrc.save()
 
 @auth.command()
 @click.pass_obj
 def token(obj):
     """Display the current access token."""
 
-    raise NotImplementedError
-
+    netrc = Netrc()
+    print(netrc['localhost']['password'])
 
 @auth.command()
 @click.pass_obj
 def whoami(obj):
     """Display the current logged in user."""
 
-    raise NotImplementedError
-
+    netrc = Netrc()
+    print(netrc['localhost']['login'])
 
 @auth.command()
 @click.pass_obj

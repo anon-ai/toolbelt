@@ -2,3 +2,4 @@ https://github.com/thruflo/click/archive/master.zip
 durations==0.3.3
 pycrypto==2.6.1
 requests==2.18.4
+tinynetrc==1.2.0
